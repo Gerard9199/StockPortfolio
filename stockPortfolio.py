@@ -67,7 +67,13 @@ for i in range(0, len(portfolioTicker)):
     forec.append(vars()[portfolioTicker[i:i+1][0]])
 forecast = pd.concat(forec, axis=1)
 
-forecastedReturn = (forecast.loc[:, ::2]).pct_change().dropna()
+data = stockPrice[portfolioTicker]
+dataLenght = round(len(data)*.8)#80% of the data
+originalData = data[:dataLenght].loc[:, ::-1]
+forecastedData = forecast.loc[:, ::-2]
+originalData.columns = forecastedData.columns
+forecastedReturn = pd.concat([originalData, forecastedData]).pct_change().dropna()
+
 forecastedMonteC = monte_carlo(forecastedReturn, portfolioTicker)
 forecastedVaRRet = forecastedMonteC[-1,:]
 
