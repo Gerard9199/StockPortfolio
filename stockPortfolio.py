@@ -53,6 +53,7 @@ portfolioTicker = np.random.choice(portfolioTicker, 5, replace=False)
 print(portfolioTicker)
 
 portfolioReturn = (stockPrice[portfolioTicker].pct_change()).dropna()
+portfolioReturn = portfolioReturn.replace(np.inf, 0)
 lastPrice = stockPrice[portfolioTicker].iloc[-1]
 
 monteCarlo = monte_carlo(portfolioReturn, portfolioTicker)
