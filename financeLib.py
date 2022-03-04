@@ -62,8 +62,6 @@ def forecasting(stockValues, stockTicker):
     xTest = np.reshape(xTest, (xTest.shape[0], xTest.shape[1], 1))
     forecasting = model.predict(xTest)
     forecasting = scaler.inverse_transform(forecasting)
-    rmse = np.sqrt(np.mean(forecasting-yTest)**2)
-    train = data[:dataLenght]
     valid= pd.DataFrame(data[dataLenght:], columns=['Original {}'.format(stockTicker)])
     valid['Forecast {}'.format(stockTicker)] = forecasting
     return valid
